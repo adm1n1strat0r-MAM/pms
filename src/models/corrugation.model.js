@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const carrugationSchema = new Schema(
   {
-    parper: {
+    paper: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Reel",
       required: true,

@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import userRoute from "./routes/user.route.js";
 import authRoute from "./routes/auth.route.js";
 import stockRoute from "./routes/stock.route.js";
+import productionRoute from './routes/production.route.js'
 
 const app = express();
 app.use(cookieParser());
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/stock", stockRoute);
+app.use("/api/production", productionRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

@@ -14,7 +14,7 @@ import {
 import { verifyToken } from "../middleware/jwt.js";
 import { isAdmin } from "../middleware/isAdmin.js";
 
-router.post("/", verifyToken, isAdmin, AddUser);
+router.post("/", AddUser);
 router.delete("/:id", verifyToken, isAdmin, deleteUser);
 router.get("/profile", verifyToken, getProfile);
 router.get("/:id", verifyToken, isAdmin, getUser);
