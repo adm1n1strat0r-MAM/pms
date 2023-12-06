@@ -18,10 +18,10 @@ const reelSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["Carrugation", "Stock"],
+      enum: ["Corrugation", "Stock", "Finished"],
       default: "Stock",
     },
-    gramiage: {
+    GSM: {
       type: Number,
     },
   },

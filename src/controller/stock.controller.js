@@ -1,9 +1,9 @@
 import Reel from "../models/reel.model.js";
-import Carrugation from "../models/corrugation.model.js";
+import CorrugationDB from "../models/corrugation.model.js";
 import Roll from "../models/roll.model.js";
 import createError from "../utils/createError.js";
 
-const CARRUGATION_STATUS = "Completed";
+const Corrugation_STATUS = "Completed";
 
 // Controller function to handle the addition of a new reel
 export const addReel = async (req, res, next) => {
@@ -63,34 +63,42 @@ export const getReels = async (req, res, next) => {
 
 export const addRolls = async (req, res, next) => {
   try {
-    const carrugation = await Carrugation.findOne({ _id: req.params.id });
-    // Check if either paperReel or naliReel is missing or already in Carrugation status
-    if (!carrugation || carrugation.status === CARRUGATION_STATUS) {
-      // If invalid Carrugation, send a 404 error response
+    const Corrugation = await CorrugationDB.findOne({ _id: req.body.id });
+    // Check if either paperReel or mediumReel is missing or already in Corrugation status
+    if (!Corrugation || Corrugation.status === Corrugation_STATUS) {
+      // If invalid Corrugation, send a 404 error response
       return next(createError(404, "Invalid for Rolls"));
     }
-    // Process the carrugation to create a summary of Roll stock
-    const carrugationDetail = carrugation.reduce((acc, carrugation) => {
-      acc.push({
-        carrugationId: carrugation._id,
-        rollType: `${carrugation.size} (${carrugation.type})`,
-      });
+    // Process the Corrugation to create a summary of Roll stock
+    const CorrugationDetail = Object.values(Corrugation)
+      .filter(
+        (corrugationItem) =>
+          corrugationItem &&
+          corrugationItem._id &&
+          corrugationItem.size &&
+          corrugationItem.type
+      )
+      .reduce((acc, corrugationItem) => {
+        acc.push({
+          corrugationId: corrugationItem._id,
+          rollType: `${corrugationItem.size} (${corrugationItem.type})`,
+        });
 
-      // The result of each iteration is the updated accumulator
-      return acc;
-    }, []); // The initial value of the accumulator is an empty array
+        // The result of each iteration is the updated accumulator
+        return acc;
+      }, []); // The initial value of the accumulator is an empty array
     const body = {
-      carrugationId: carrugationDetail[0].carrugationId,
-      rollType: carrugationDetail[0].rollType,
+      corrugationId: CorrugationDetail[0].corrugationId,
+      rollType: CorrugationDetail[0].rollType,
       rollQty: req.body.rollQty,
     };
     // Add a new Rolls using the body data
     const roll = await Roll.create(body);
-    // Update both paperReel and naliReel to Carrugation status in parallel
+    // Update both paperReel and mediumReel to Corrugation status in parallel
     await Promise.all([
-      Carrugation.updateOne(
-        { _id: body.carrugationId },
-        { $set: { status: CARRUGATION_STATUS } }
+      CorrugationDB.updateOne(
+        { _id: body.corrugationId },
+        { $set: { status: Corrugation_STATUS } }
       ),
     ]);
 

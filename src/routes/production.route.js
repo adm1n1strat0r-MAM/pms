@@ -5,13 +5,15 @@ import { verifyToken } from "../middleware/jwt.js";
 import { isManager } from "../middleware/isManager.js";
 
 import {
-  addCarrugation,
-  getAllCarrugationsInfo,
-  getCarrugationInfo,
+  addCorrugation,
+  getAllCorrugationsInfo,
+  getCorrugationInfo,
+  addPastingTemp
 } from "../controller/production.controller.js";
 
-router.post("/carrugation", verifyToken, isManager, addCarrugation);
-router.get("/carrugations", verifyToken, isManager, getAllCarrugationsInfo);
-router.get("/carrugations/:id", verifyToken, isManager, getCarrugationInfo);
+router.post("/corrugation", verifyToken, isManager, addCorrugation);
+router.get("/corrugations", verifyToken, isManager, getAllCorrugationsInfo);
+router.get("/corrugations/:id", verifyToken, isManager, getCorrugationInfo);
+router.post("/templates/pasting", verifyToken, isManager, addPastingTemp);
 
 export default router;

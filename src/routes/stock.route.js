@@ -12,6 +12,6 @@ import {
 
 router.post("/reel", verifyToken, isManager, addReel);
 router.get("/reel", verifyToken, isManager, getReels);
-router.post("/roll/:id", verifyToken, isManager, addRolls);
+router.post("/roll", verifyToken, isManager, addRolls);
 
 export default router;

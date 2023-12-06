@@ -9,7 +9,7 @@ const carrugationSchema = new Schema(
       ref: "Reel",
       required: true,
     },
-    nali: {
+    medium: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Reel",
       required: true,
@@ -34,6 +34,6 @@ const carrugationSchema = new Schema(
   }
 );
 
-const Carrugation = mongoose.model("Carrugation", carrugationSchema);
+const Corrugation = mongoose.model("Corrugation", carrugationSchema);
 
-export default Carrugation;
+export default Corrugation;

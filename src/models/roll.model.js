@@ -4,9 +4,9 @@ const { Schema } = mongoose;
 
 const rollSchema = new Schema(
   {
-    carrugationId: {
+    corrugationId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Carrugation",
+      ref: "Corrugation",
       required: true,
       unique: true,
     },
